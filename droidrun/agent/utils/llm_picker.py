@@ -66,10 +66,10 @@ def load_llm(provider_name: str, **kwargs: Any) -> LLM:
 
         # Filter out None values from kwargs
         filtered_kwargs = {k: v for k, v in kwargs.items() if v is not None}
-        
+
         # Initialize
         logger.debug(f"Initializing {llm_class.__name__} with kwargs: {list(filtered_kwargs.keys())}")
-        llm_instance = llm_class(**filtered_kwargs)
+        llm_instance = llm_class(is_chat_model=True,**filtered_kwargs)
         logger.debug(f"Successfully loaded and initialized LLM: {provider_name}")
         if not llm_instance:
             raise RuntimeError(f"Failed to initialize LLM instance for {provider_name}.")
@@ -86,7 +86,7 @@ def load_llm(provider_name: str, **kwargs: Any) -> LLM:
     except Exception as e:
         logger.error(f"An unexpected error occurred initializing {provider_name}: {e}")
         raise e
-    
+
 # --- Example Usage ---
 if __name__ == "__main__":
     # Install the specific LLM integrations you want to test:
